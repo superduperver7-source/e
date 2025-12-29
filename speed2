@@ -1,0 +1,23 @@
+local player = game.Players.LocalPlayer
+
+local gui = Instance.new("ScreenGui")
+gui.Parent = player:WaitForChild("PlayerGui")
+
+local button = Instance.new("TextButton")
+button.Size = UDim2.fromOffset(150, 50)
+button.Position = UDim2.fromOffset(20, 20)
+button.Text = "OFF"
+button.Parent = gui
+
+local on = false
+
+button.MouseButton1Click:Connect(function()
+	on = not on
+	local hum = player.Character:WaitForChild("Humanoid")
+
+	if on then
+		hum.WalkSpeed = 40
+		button.Text = "ON"
+	else
+		hum.WalkSpeed = 16
+		button.Text =
