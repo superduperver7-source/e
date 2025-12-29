@@ -1,0 +1,27 @@
+local player = game.Players.LocalPlayer
+
+local gui = Instance.new("ScreenGui")
+gui.ResetOnSpawn = false
+gui.Parent = player:WaitForChild("PlayerGui")
+
+local button = Instance.new("TextButton")
+button.Size = UDim2.fromOffset(160, 50)
+button.Position = UDim2.fromOffset(20, 20)
+button.Text = "Speed: OFF"
+button.TextSize = 20
+button.Parent = gui
+
+local enabled = false
+
+button.MouseButton1Click:Connect(function()
+	enabled = not enabled
+	local humanoid = player.Character:WaitForChild("Humanoid")
+
+	if enabled then
+		humanoid.WalkSpeed = 40
+		button.Text = "Speed: ON"
+	else
+		humanoid.WalkSpeed = 16
+		button.Text = "Speed: OFF"
+	end
+end)
