@@ -1,0 +1,49 @@
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+
+local NORMAL_SPEED = 16
+local FAST_SPEED = 40
+local enabled = false
+
+local function getHumanoid()
+	local character = player.Character or player.CharacterAdded:Wait()
+	return character:WaitForChild("Humanoid")
+end
+
+local gui = Instance.new("ScreenGui")
+gui.Name = "SpeedGui"
+gui.ResetOnSpawn = false
+gui.Parent = player:WaitForChild("PlayerGui")
+
+local button = Instance.new("TextButton")
+button.Size = UDim2.new(0, 160, 0, 50)
+button.Position = UDim2.new(0, 20, 0.5, -25)
+button.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+button.TextColor3 = Color3.fromRGB(255, 255, 255)
+button.Font = Enum.Font.SourceSansBold
+button.TextSize = 20
+button.Text = "Speed: OFF"
+button.Parent = gui
+button.BorderSizePixel = 0
+
+button.MouseButton1Click:Connect(function()
+	local humanoid = getHumanoid()
+	enabled = not enabled
+
+	if enabled then
+		humanoid.WalkSpeed = FAST_SPEED
+		button.Text = "Speed: ON"
+		button.BackgroundColor3 = Color3.fromRGB(0, 170, 0)
+	else
+		humanoid.WalkSpeed = NORMAL_SPEED
+		button.Text = "Speed: OFF"
+		button.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+	end
+end)
+
+player.CharacterAdded:Connect(function()
+	task.wait(0.2)
+	if not enabled then
+		getHumanoid().WalkSpeed = NORMAL_SPEED
+	end
+end)
